@@ -23,6 +23,10 @@ span.peg, #palette li {
     text-indent: -999em;
 }
 
+#palette li {
+    cursor: pointer;
+}
+
 .blue { background-color: blue; }
 .red { background-color: red; }
 .yellow { background-color: yellow; }

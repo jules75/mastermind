@@ -15,6 +15,14 @@
 (def colours [:red :green :blue :black :white :yellow])
 
 
+(def possible-rows
+  (for [a colours
+        b colours
+        c colours
+        d colours]
+    [a b c d]))
+
+
 (defn transpose
   "Turn rows into columns and vice versa."
   [colls]
@@ -53,14 +61,27 @@
   (->> [row1 row2] remove-identicals in-both vals (reduce +)))
 
 
+(def score (juxt score-black score-white))
+
+
 (defn random-row
   []
   (vec (repeatedly 4 #(rand-nth colours))))
 
 
+(defn candidates
+  "Return only rows that match the supplied guess/score pairs.
+  Used to eliminate impossible row combinations."
+  [rows guesses guess-scores]
+  (let [match? #(= (score % (first guesses)) (first guess-scores))]
+    (if (seq guesses)
+      (recur (filter match? rows) (rest guesses) (rest guess-scores))
+      rows)))
+
+
 (defn row->html
   "Turn row (and scores) into html"
-  [[a b c d] black-score white-score]
+  [[a b c d] [black-score white-score]]
   (goog.string.format 
    "<p>
 <span class=\"score black\">%d</span>
@@ -90,10 +111,14 @@
             (for [row @player-guesses]
               (row->html
                (map name row)
-               (score-black row @computer-row)
-               (score-white row @computer-row)
+               (score row @computer-row)
                ))))
     (d/set-value! (d/sel1 :#guess) nil)
+    (let [c (candidates 
+             possible-rows 
+             @player-guesses 
+             (map #(score @computer-row %) @player-guesses))]
+      (println c (count c)))
     (.preventDefault e)))
 
 

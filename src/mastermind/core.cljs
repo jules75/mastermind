@@ -12,7 +12,15 @@
 (def player-guesses (atom []))
 
 
-(def colours [:red :green :blue :black :white :yellow])
+(def charmap {\b :blue
+              \r :red
+              \g :green
+              \y :yellow
+              \w :white
+              \k :black})
+
+
+(def colours (vals charmap))
 
 
 (def possible-rows
@@ -106,13 +114,7 @@
 
 (defn guess
   [e]
-  (let [s (d/value (d/sel1 :#guess))
-        charmap {\b :blue
-                 \r :red
-                 \g :green
-                 \y :yellow
-                 \w :white
-                 \k :black}]
+  (let [s (d/value (d/sel1 :#guess))]
     (swap! player-guesses conj (map charmap s))
     (d/set-html! 
      (d/sel1 :#result)

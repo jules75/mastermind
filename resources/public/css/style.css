@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
 }
 
+form {
+    float: right;
+}
+
 span {
     display: inline-block;
     height: 20px;

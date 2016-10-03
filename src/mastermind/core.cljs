@@ -75,8 +75,9 @@
 
 
 (defn guess
-  [s]
-  (let [charmap {\b :blue
+  [e]
+  (let [s (d/value (d/sel1 :#guess))
+        charmap {\b :blue
                  \r :red
                  \g :green
                  \y :yellow
@@ -91,9 +92,12 @@
                (map name row)
                (score-black row @computer-row)
                (score-white row @computer-row)
-               ))))))
+               ))))
+    (d/set-value! (d/sel1 :#guess) nil)
+    (.preventDefault e)))
 
 
-
+; init
 (reset! computer-row (random-row))
+(d/listen! (d/sel1 :button) :click guess)
 

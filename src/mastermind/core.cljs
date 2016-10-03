@@ -96,6 +96,14 @@
    a a b b c c d d))
 
 
+(defn suggest
+  "Suggests a move/guess"
+  []
+  (let [scores (map #(score @computer-row %) @player-guesses)
+        c (candidates possible-rows @player-guesses scores)]
+    (println (str "Suggestion: " (rand-nth c)))))
+
+
 (defn guess
   [e]
   (let [s (d/value (d/sel1 :#guess))
@@ -115,15 +123,12 @@
                (score row @computer-row)
                ))))
     (d/set-value! (d/sel1 :#guess) nil)
-    (let [c (candidates 
-             possible-rows 
-             @player-guesses 
-             (map #(score @computer-row %) @player-guesses))]
-      (println c (count c)))
+    (suggest)
     (.preventDefault e)))
 
 
 ; init
 (reset! computer-row (random-row))
 (d/listen! (d/sel1 :button) :click guess)
+(suggest)
 

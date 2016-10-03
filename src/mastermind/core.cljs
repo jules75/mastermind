@@ -1,9 +1,16 @@
 (ns mastermind.core
-  (:require [clojure.set :refer [intersection]]))
+  (:require [cljs.reader :refer [read-string]]
+            [clojure.set :refer [intersection]]))
 
 (enable-console-print!)
 
-(def colours #{:red :green :blue :black :white :yellow})
+
+; mutable state
+(def computer-row (atom []))
+(def player-guesses (atom []))
+
+
+(def colours [:red :green :blue :black :white :yellow])
 
 
 (defn transpose
@@ -44,30 +51,21 @@
   (->> [row1 row2] remove-identicals in-both vals (reduce +)))
 
 
-(def possible-rows
-  (for [a colours
-        b colours
-        c colours
-        d colours]
-    [a b c d]))
+(defn random-row
+  []
+  (vec (repeatedly 4 #(rand-nth colours))))
 
 
-(let [target [:red :white :blue :red]]
-  (doseq [row possible-rows]
+(defn guess
+  [s]
+  (swap! player-guesses conj (read-string s))
+  (doseq [row @player-guesses]
     (println 
-     (score-black row target) 
-     (score-white row target)
+     "b" (score-black row @computer-row)
+     "w" (score-white row @computer-row)
      row)))
 
 
-;(println (score-white [:red :white :blue :green] [:white :yellow :white :yellow]))
-;(println (score-white [1 2 3 4] [2 5 2 5]))
-;(println (score-white [1 2 3 4] [4 2 1 3]))
 
-;(println (in-both [[:red :green :red] [:blue :red :yellow]]))
-;(println (in-both [[:red :green :red] [:green :red :yellow]]))
-;(println (in-both [[:red :green :blue] [:blue :red :red]]))
-;(println (in-both [[:red :green :red] [:green :red :red]]))
-;(println (in-both [[:blue :white :black] [:yellow :red :green]]))
-
+(reset! computer-row (random-row))
 

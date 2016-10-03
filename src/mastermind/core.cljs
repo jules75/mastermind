@@ -1,6 +1,8 @@
 (ns mastermind.core
   (:require [cljs.reader :refer [read-string]]
-            [clojure.set :refer [intersection]]))
+            [clojure.set :refer [intersection]]
+            [dommy.core :as d]
+            goog.string.format))
 
 (enable-console-print!)
 
@@ -56,14 +58,34 @@
   (vec (repeatedly 4 #(rand-nth colours))))
 
 
+(defn row->html
+  "Turn row (and scores) into html"
+  [[a b c d] black-score white-score]
+  (goog.string.format 
+   "<p>
+<span class=\"score black\">%d</span>
+<span class=\"score white\">%d</span>
+<span class=\"peg %s\">%s</span>
+<span class=\"peg %s\">%s</span>
+<span class=\"peg %s\">%s</span>
+<span class=\"peg %s\">%s</span>
+</p>" 
+   black-score white-score
+   a a b b c c d d))
+
+
 (defn guess
   [s]
   (swap! player-guesses conj (read-string s))
-  (doseq [row @player-guesses]
-    (println 
-     "b" (score-black row @computer-row)
-     "w" (score-white row @computer-row)
-     row)))
+  (d/set-html! 
+   (d/sel1 :#result)
+   (apply str
+          (for [row @player-guesses]
+            (row->html
+             (map name row)
+             (score-black row @computer-row)
+             (score-white row @computer-row)
+             )))))
 
 
 

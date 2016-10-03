@@ -1,2 +1,29 @@
-/* some style */
+body {
+    font-family: sans-serif;
+}
+
+span {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+span.peg {
+    text-indent: -999em;
+}
+
+.peg.blue { background-color: blue; }
+.peg.red { background-color: red; }
+.peg.yellow { background-color: yellow; }
+.peg.green { background-color: green; }
+.peg.black { background-color: black; }
+.peg.white { background-color: white; border: }
+
+.score.black { 
+    background-color: black;
+    color: white;
+}
+
 

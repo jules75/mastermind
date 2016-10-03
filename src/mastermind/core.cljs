@@ -76,16 +76,22 @@
 
 (defn guess
   [s]
-  (swap! player-guesses conj (read-string s))
-  (d/set-html! 
-   (d/sel1 :#result)
-   (apply str
-          (for [row @player-guesses]
-            (row->html
-             (map name row)
-             (score-black row @computer-row)
-             (score-white row @computer-row)
-             )))))
+  (let [charmap {\b :blue
+                 \r :red
+                 \g :green
+                 \y :yellow
+                 \w :white
+                 \k :black}]
+    (swap! player-guesses conj (map charmap s))
+    (d/set-html! 
+     (d/sel1 :#result)
+     (apply str
+            (for [row @player-guesses]
+              (row->html
+               (map name row)
+               (score-black row @computer-row)
+               (score-white row @computer-row)
+               ))))))
 
 
 

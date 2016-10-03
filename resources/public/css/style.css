@@ -23,6 +23,18 @@ span.peg, #palette li {
     text-indent: -999em;
 }
 
+#hint {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    color: black;
+    background-color: black;
+    padding: 10px;
+}
+#hint:hover {
+    color: white;
+}
+
 #palette li {
     cursor: pointer;
 }

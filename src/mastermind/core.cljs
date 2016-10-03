@@ -109,7 +109,10 @@
   []
   (let [scores (map #(score @computer-row %) @player-guesses)
         c (candidates possible-rows @player-guesses scores)]
-    (println (str "Suggestion: " (rand-nth c)))))
+    (println (str "Possible solutions: " (count c)))
+    (d/set-text! 
+     (d/sel1 :#hint)
+     (str "Suggestion " (rand-nth c)))))
 
 
 (defn guess

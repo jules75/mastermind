@@ -129,8 +129,19 @@
     (.preventDefault e)))
 
 
+(defn colour-pick
+  "Populate guess input when user clicks coloured box."
+  [e]
+  (let [c (d/attr (.-target e) "data-key")
+        el (d/sel1 :#guess)
+        guess-so-far (d/value el)]
+    (d/set-value! el (str guess-so-far c))))
+
+
 ; init
 (reset! computer-row (random-row))
 (d/listen! (d/sel1 :button) :click guess)
+(doseq [li (d/sel [:#palette :li])]
+  (d/listen! li :click colour-pick))
 (suggest)
 

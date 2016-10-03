@@ -11,7 +11,7 @@ p.victory {
     padding: 8px;
 }
 
-span {
+span, #palette li {
     display: inline-block;
     height: 20px;
     width: 20px;
@@ -19,16 +19,16 @@ span {
     text-align: center;
 }
 
-span.peg {
+span.peg, #palette li {
     text-indent: -999em;
 }
 
-.peg.blue { background-color: blue; }
-.peg.red { background-color: red; }
-.peg.yellow { background-color: yellow; }
-.peg.green { background-color: green; }
-.peg.black { background-color: black; }
-.peg.white { background-color: white; border: }
+.blue { background-color: blue; }
+.red { background-color: red; }
+.yellow { background-color: yellow; }
+.green { background-color: green; }
+.black { background-color: black; }
+.white { background-color: white;  }
 
 .score.black { 
     background-color: black;

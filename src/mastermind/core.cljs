@@ -83,7 +83,7 @@
   "Turn row (and scores) into html"
   [[a b c d] [black-score white-score]]
   (goog.string.format 
-   "<p>
+   "<p class=\"%s\">
 <span class=\"score black\">%d</span>
 <span class=\"score white\">%d</span>
 <span class=\"peg %s\">%s</span>
@@ -91,6 +91,7 @@
 <span class=\"peg %s\">%s</span>
 <span class=\"peg %s\">%s</span>
 </p>" 
+   (if (= 4 black-score) "victory" "")
    black-score white-score
    a a b b c c d d))
 

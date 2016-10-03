@@ -6,6 +6,11 @@ form {
     float: right;
 }
 
+p.victory {
+    background-color: red;
+    padding: 8px;
+}
+
 span {
     display: inline-block;
     height: 20px;
@@ -28,6 +33,10 @@ span.peg {
 .score.black { 
     background-color: black;
     color: white;
+}
+
+.score.white {
+    background-color: white;
 }
 
 
